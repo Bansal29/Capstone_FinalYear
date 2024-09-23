@@ -1,0 +1,42 @@
+/* Home.css */
+.carousel-image {
+  height: 400px; /* Adjust height as needed */
+  object-fit: cover; /* Ensure images fit the carousel */
+}
+ul {
+  list-style-type: none; /* Removes bullet points */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Removes default margin */
+}
+.carousel-caption {
+  position: absolute;
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100%; /* Cover the full width */
+  height: 100%; /* Cover the full height */
+  display: flex; /* Flexbox for centering text */
+  flex-direction: column; /* Stack text vertically */
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  color: white; /* Text color */
+  text-align: center; /* Center text */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 10; /* Ensure it appears above the image */
+  padding: 20px; /* Optional padding */
+  font-size: 1.5rem; /* Increase the font size */
+}
+
+.carousel-caption h5 {
+  font-size: 2rem; /* Increase the size of the heading */
+  margin-bottom: 10px; /* Add space below the heading */
+}
+
+.carousel-caption p {
+  font-size: 1.2rem; /* Increase the size of the paragraph text */
+}
+
+.carousel-image {
+  filter: brightness(
+    70%
+  ); /* Darken the image slightly for better text visibility */
+}
