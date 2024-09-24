@@ -59,7 +59,16 @@ function Quiz({ token }) {
       q7: quizData.q7,
       q8: quizData.q8,
     };
-
+    const quizPayload2 = [
+      quizData.q1,
+      quizData.q2,
+      quizData.q3,
+      quizData.q4,
+      quizData.q5,
+      quizData.q6,
+      quizData.q7,
+      quizData.q8,
+    ];
     try {
       // Step 1: Submit quiz data to the Python backend
       const response = await fetch("http://localhost:8000/quiz/", {
@@ -83,13 +92,13 @@ function Quiz({ token }) {
 
       // Step 2: Prepare data to save to Node.js backend
       const saveQuizPayload = {
-        responses: quizPayload,
+        responses: quizPayload2,
         result: data.result,
         suggestedTreatment: showSuggestedTreatments ? suggestedTreatments : [], // Only include treatments if depressed
       };
 
       // Step 3: Save the quiz data to the Node.js backend
-      const saveResponse = await fetch("http://localhost:5000/quiz/save", {
+      const saveResponse = await fetch("http://localhost:5000/api/quiz/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

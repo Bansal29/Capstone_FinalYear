@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function QuizHistory({ token }) {
   const [quizHistory, setQuizHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchQuizHistory = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/quiz/history", {
+        const response = await fetch("http://localhost:5000/api/quiz/history", {
           headers: {
-            Authorization: `Bearer ${token}`, // Send the token for authentication
+            Authorization: `Bearer ${token}`, //sending the bearer token(generated after login)
             "Content-Type": "application/json",
           },
         });
@@ -67,7 +65,7 @@ function QuizHistory({ token }) {
                   </h5>
                   <p className="card-text text-muted">
                     <strong>Date Taken: </strong>
-                    {formatDate(quiz.timestamp)} {/* Format the date */}
+                    {formatDate(quiz.timestamp)}
                   </p>
                   {quiz.result && (
                     <p className="card-text">

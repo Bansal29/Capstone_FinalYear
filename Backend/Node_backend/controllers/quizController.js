@@ -2,6 +2,7 @@ const User = require("../models/User");
 
 // Controller to save quiz
 exports.saveQuiz = async (req, res) => {
+  console.log(req.body);
   const { responses, result, suggestedTreatment } = req.body;
 
   try {
@@ -17,7 +18,7 @@ exports.saveQuiz = async (req, res) => {
       result,
       suggestedTreatment,
     };
-
+    console.log("New quiz:", newQuiz);
     user.quizzes.push(newQuiz);
     await user.save();
 
