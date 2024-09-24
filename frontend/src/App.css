@@ -1,3 +1,22 @@
 li {
   text-decoration: none;
 }
+/* Global dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .navbar {
+  background-color: #333;
+}
+
+.dark-mode .navbar .nav-link {
+  color: #ffffff;
+}
+
+.dark-mode .btn {
+  background-color: #444;
+  border-color: #555;
+  color: #fff;
+}

@@ -1,0 +1,21 @@
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212; /* Dark background for the body */
+  color: #ffffff; /* Light text color for the body */
+}
+
+body.dark-mode .navbar {
+  background-color: #f8f9fa; /* Keep the Navbar light */
+  color: #000; /* Dark text for Navbar */
+}
+
+body.dark-mode .navbar .nav-link {
+  color: #000; /* Dark text for navbar links */
+}
+
+body.dark-mode .navbar .btn {
+  background-color: #007bff; /* Default button color */
+  border-color: #007bff; /* Button border color */
+}
+
+/* You can customize more styles as needed for other components */
