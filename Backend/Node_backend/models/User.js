@@ -1,5 +1,24 @@
 const mongoose = require("mongoose");
 
+const QuizSchema = new mongoose.Schema({
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+  responses: {
+    type: [Number], // Array of numbers representing answers to quiz questions
+    required: true,
+  },
+  result: {
+    type: String, // Result of the quiz
+    required: true,
+  },
+  suggestedTreatment: {
+    type: [String], // Array of treatment recommendations
+    required: true,
+  },
+});
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -14,17 +33,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  quizzes: [
-    {
-      responses: [Number],
-      result: String,
-      date: { type: Date, default: Date.now },
-    },
-  ],
+  quizzes: [QuizSchema], // Embedding quizzes inside the user schema
 });
 
-module.exports = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
+module.exports = User;

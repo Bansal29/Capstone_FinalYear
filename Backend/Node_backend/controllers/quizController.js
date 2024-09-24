@@ -1,17 +1,43 @@
 const User = require("../models/User");
 
+// Controller to save quiz
 exports.saveQuiz = async (req, res) => {
-  const { responses, result } = req.body;
+  const { responses, result, suggestedTreatment } = req.body;
+
   try {
     const user = await User.findById(req.userId);
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.quizzes.push({ responses, result });
+    const newQuiz = {
+      timestamp: new Date(),
+      responses,
+      result,
+      suggestedTreatment,
+    };
+
+    user.quizzes.push(newQuiz);
     await user.save();
 
-    res.json({ message: "Quiz saved successfully" });
+    res.status(201).json({ message: "Quiz saved successfully", quiz: newQuiz });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+// New function to fetch quiz history
+exports.getQuizHistory = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("quizzes");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user.quizzes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

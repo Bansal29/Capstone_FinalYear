@@ -30,6 +30,16 @@ function Navbar({ token, handleLogout }) {
                 Home
               </Link>
             </li>
+            {token && ( // Render Quiz History link only if token exists
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-decoration-none"
+                  to="/quiz/history"
+                >
+                  Quiz History
+                </Link>
+              </li>
+            )}
           </ul>
 
           {!token ? (
