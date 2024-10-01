@@ -138,24 +138,26 @@ function Home() {
             </Link>
           </div>
           <div className="col-md-4">
-            <div className="card">
-              <img
-                src="depression4.png"
-                className="card-img-top"
-                alt="Support"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Support</h5>
-                <p className="card-text">
-                  Find resources and support to improve your well-being,
-                  including helplines, therapy options, and community resources
-                  tailored for mental health.
-                </p>
-                <Link to="/support" className="btn btn-primary">
-                  Get Support
-                </Link>
+            <Link to="/support" className="text-decoration-none">
+              <div className="card">
+                <img
+                  src="depression4.png"
+                  className="card-img-top"
+                  alt="Support"
+                />
+                <div className="card-body">
+                  <h5 className="card-title">Support</h5>
+                  <p className="card-text">
+                    Find resources and support to improve your well-being,
+                    including helplines, therapy options, and community
+                    resources tailored for mental health.
+                  </p>
+                  <Link to="/support" className="btn btn-primary">
+                    Get Support
+                  </Link>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
