@@ -36,7 +36,7 @@ function Signup() {
           <div className="card-body">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label className="form-label">Full Name</label>
+                <label className="form-label">First Name</label>
                 <input
                   type="text"
                   className="form-control"

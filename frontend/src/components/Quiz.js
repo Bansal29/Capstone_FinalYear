@@ -33,6 +33,7 @@ function Quiz({ token }) {
 
   const [result, setResult] = useState("");
   const [showSuggestedTreatments, setShowSuggestedTreatments] = useState(false);
+  const [isDepressed, setisDepressed] = useState(false);
 
   const handleChange = (e) => {
     setQuizData({
@@ -89,12 +90,15 @@ function Quiz({ token }) {
       const data = await response.json();
       setResult(data.result);
       setShowSuggestedTreatments(data.result === "Depressed"); // Check if the result indicates depression
+      if (data.result == "Depressed") {
+        setisDepressed(true);
+      }
 
       // Step 2: Prepare data to save to Node.js backend
       const saveQuizPayload = {
         responses: quizPayload2,
         result: data.result,
-        suggestedTreatment: showSuggestedTreatments ? suggestedTreatments : [], // Only include treatments if depressed
+        suggestedTreatment: isDepressed ? suggestedTreatments : [], // Only include treatments if depressed
       };
 
       // Step 3: Save the quiz data to the Node.js backend
