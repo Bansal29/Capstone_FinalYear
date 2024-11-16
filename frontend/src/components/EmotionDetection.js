@@ -139,7 +139,13 @@ function EmotionDetection({ token }) {
     setDepressionScores([]); // Reset depression scores
     setImageSrc(null); // Reset the captured image
   };
-
+  if (!token) {
+    return (
+      <div className="alert alert-warning mt-4">
+        Please log in to access the facial emotion detection feature.
+      </div>
+    );
+  }
   return (
     <div className="container py-5">
       <h2 className="text-center mb-4">Emotion Detection using Webcam</h2>

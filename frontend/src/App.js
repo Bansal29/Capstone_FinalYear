@@ -12,6 +12,8 @@ import Support from "./components/Support";
 import QuizHistory from "./components/QuizHistory";
 import EmotionDetection from "./components/EmotionDetection";
 import FacialHistory from "./components/FacialHistory";
+import Footer from "./components/Footer";
+import GenerateReport from "./components/GenerateReport";
 
 function App() {
   const [token, setToken] = useState(null);
@@ -44,12 +46,14 @@ function App() {
           <Route path="/learn" element={<Learn />} />
           <Route path="/support" element={<Support />} />
           <Route path="/facial" element={<EmotionDetection token={token} />} />
+          <Route path="/report" element={<GenerateReport token={token} />} />
           <Route
             path="/facial/history"
             element={<FacialHistory token={token} />}
           />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -263,14 +263,14 @@ function Home() {
 
       <div className="container mt-4">
         <h1 className="text-center">
-          Welcome to the Mental Health Assessment Quiz
+          Welcome to the Mental Health Assessment Platform
         </h1>
         <p className="text-center">
           The PHQ-8 is a widely used tool for assessing depression. Take our
           quiz to better understand your mental health and explore helpful
           resources.
         </p>
-        <div className="row mt-4">
+        <div className="row mt-4 pb-2">
           <div className="col-md-3">
             <div className="card">
               <img src="depression6.jpg" className="card-img-top" alt="Learn" />
@@ -317,8 +317,8 @@ function Home() {
                   <h5 className="card-title">Support</h5>
                   <p className="card-text">
                     Find resources and support to improve your well-being,
-                    including helplines, therapy options, and community
-                    resources tailored for mental health.
+                    including helplines and community resources tailored for
+                    mental health.
                   </p>
                   <Link to="/support" className="btn btn-primary">
                     Get Support
@@ -332,11 +332,11 @@ function Home() {
               <div className="card">
                 <img src="fcaial.png" className="card-img-top" alt="Facial" />
                 <div className="card-body">
-                  <h5 className="card-title">Facial</h5>
+                  <h5 className="card-title">Facial Assesment</h5>
                   <p className="card-text">
                     Use real-time facial analysis to detect and understand
-                    emotional expressions. This tool can help monitor and
-                    analyze facial cues for mental health assessment.
+                    emotions. This tool can help monitor and analyze facial cues
+                    for mental health assessment.
                   </p>
                   <Link to="/facial" className="btn btn-primary">
                     Start Facial Analysis

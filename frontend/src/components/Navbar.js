@@ -70,6 +70,13 @@ function Navbar({ token, handleLogout }) {
                 </Link>
               </li>
             )}
+            {token && (
+              <li className="nav-item">
+                <Link className="nav-link text-decoration-none" to="/report">
+                  Generate Report
+                </Link>
+              </li>
+            )}
           </ul>
 
           {!token ? (
