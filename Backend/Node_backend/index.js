@@ -23,14 +23,15 @@ app.use("/api/quiz", quizRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/facial", faceRoutes);
 app.get("/api/nearby-counselors", async (req, res) => {
-  const location = "40.712776,-74.005974"; // Example coordinates
+  const location = "18.5204303,73.8567437"; // Example coordinates
   const radius = 5000;
   const apiKey = "AIzaSyDU3YX1HSgywtTHHZ44I82rPFZTEOaV0gQ"; // Replace with your actual key
 
   try {
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=${radius}&type=psychiatrist&key=${apiKey}`
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=psychiatrists+near+${location}&key=${apiKey}`
     );
+
     res.json(response.data.results);
   } catch (error) {
     console.error("Error fetching counselors:", error);
