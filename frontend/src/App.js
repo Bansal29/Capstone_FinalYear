@@ -4,16 +4,18 @@ import Quiz from "./components/Quiz";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
-import Navbar from "./components/Navbar"; // Import the Navbar component
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import Navbar from "./components/Navbar";
+import { useNavigate } from "react-router-dom";
 import UserProfile from "./components/UserProfile";
 import Learn from "./components/Learn";
 import Support from "./components/Support";
 import QuizHistory from "./components/QuizHistory";
+import EmotionDetection from "./components/EmotionDetection";
+import FacialHistory from "./components/FacialHistory";
 
 function App() {
   const [token, setToken] = useState(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -25,7 +27,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    navigate("/"); // Use navigate to redirect to home
+    navigate("/");
   };
 
   return (
@@ -41,6 +43,11 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/facial" element={<EmotionDetection token={token} />} />
+          <Route
+            path="/facial/history"
+            element={<FacialHistory token={token} />}
+          />
         </Routes>
       </div>
     </div>

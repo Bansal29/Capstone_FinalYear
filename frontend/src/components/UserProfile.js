@@ -132,7 +132,6 @@ const UserProfile = () => {
       mobileNumber,
       email,
       age,
-      password,
     };
 
     try {
@@ -157,7 +156,6 @@ const UserProfile = () => {
       setMobileNumber("");
       setEmail("");
       setAge("");
-      setPassword("");
     } catch (error) {
       console.error("Error updating profile:", error);
       setError(error.message);
@@ -260,17 +258,6 @@ const UserProfile = () => {
                         placeholder="Enter Age"
                         value={age}
                         onChange={(e) => setAge(e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="col-md-12">
-                      <Label>Password</Label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Enter password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
                         required
                       />
                     </div>

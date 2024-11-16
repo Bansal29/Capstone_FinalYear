@@ -20,7 +20,7 @@ function QuizHistory({ token }) {
         if (!response.ok) {
           throw new Error("Failed to fetch quiz history.");
         }
-
+        console.log(response);
         const data = await response.json();
         setQuizHistory(data); // Assuming the API returns an array of quiz history
       } catch (err) {

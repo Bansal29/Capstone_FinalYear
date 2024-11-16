@@ -18,23 +18,17 @@ const QuizSchema = new mongoose.Schema({
     required: true,
   },
 });
-
-// const UserSchema = new mongoose.Schema({
-//   name: {
-//     type: String,
-//     required: true,
-//   },
-//   email: {
-//     type: String,
-//     required: true,
-//     unique: true,
-//   },
-//   password: {
-//     type: String,
-//     required: true,
-//   },
-//   quizzes: [QuizSchema],
-// });
+const FacialResultSchema = new mongoose.Schema({
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+  emotions: [String],
+  averageDepressionScore: {
+    type: Number, // Average depression score calculated from facial analysis
+    required: true,
+  },
+});
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -67,6 +61,7 @@ const UserSchema = new mongoose.Schema({
     default: "https://example.com/default-profile-pic.png", // Default image URL
   },
   quizzes: [QuizSchema],
+  facialResults: [FacialResultSchema],
 });
 const User = mongoose.model("User", UserSchema);
 module.exports = User;

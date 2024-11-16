@@ -90,7 +90,7 @@ function Quiz({ token }) {
       const data = await response.json();
       setResult(data.result);
       setShowSuggestedTreatments(data.result === "Depressed"); // Check if the result indicates depression
-      if (data.result == "Depressed") {
+      if (data.result === "Depressed") {
         setisDepressed(true);
       }
 

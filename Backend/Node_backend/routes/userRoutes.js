@@ -5,6 +5,6 @@ const { updateProfile, getProfile } = require("../controllers/userController");
 const router = express.Router();
 
 router.get("/profile", authMiddleware, getProfile);
-router.put("/update", updateProfile);
+router.put("/update", authMiddleware, updateProfile);
 
 module.exports = router;
