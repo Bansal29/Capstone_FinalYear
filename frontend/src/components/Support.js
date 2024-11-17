@@ -202,7 +202,10 @@ function Support() {
         <li className="list-group-item">
           <strong>MaanSick Helpline:</strong>{" "}
           <a href="tel:1800-123-4567" className="link-primary">
-            1231-456-789
+            1231-456-789Yeah. Hey, Cortana. Hey, Cortana. Hello. Hey, Cortana.
+            Hey, Cortana. Hey, Cortana. Nachle nachle kolkata. Nachle nachle
+            nachle hai uska hindi. Hey, Cortana. Buy mobile. Hey, Cortana.
+            Gigabyte. Hey, Cortana. Hey, Cortana.
           </a>
         </li>
       </ul>
