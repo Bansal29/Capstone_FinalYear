@@ -234,7 +234,7 @@ const GenerateReport = ({ token }) => {
           </div>
         )}
 
-        {nearbyCounselors.length > 0 && (
+        {nearbyCounselors.length > 0 && combinedResult[1] === "Depressed" && (
           <div className="card mb-4">
             <div className="card-header bg-info text-white">
               <h5>Nearby Counselors</h5>
