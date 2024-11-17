@@ -23,6 +23,7 @@ app.use(
     credentials: true, // Include credentials (e.g., cookies, authorization headers)
   })
 );
+app.options("*", cors());
 
 // Routes
 app.use("/api/auth", authRoutes);
