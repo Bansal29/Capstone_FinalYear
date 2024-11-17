@@ -22,14 +22,35 @@ app.use("/api/auth", authRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/facial", faceRoutes);
+// app.get("/api/nearby-counselors", async (req, res) => {
+//   const location = "18.5204303,73.8567437"; // Example coordinates
+//   const radius = 5000;
+//   const apiKey = "AIzaSyDU3YX1HSgywtTHHZ44I82rPFZTEOaV0gQ"; // Replace with your actual key
+
+//   try {
+//     const response = await axios.get(
+//       `https://maps.googleapis.com/maps/api/place/textsearch/json?query=psychiatrists+near+${location}&key=${apiKey}`
+//     );
+
+//     res.json(response.data.results);
+//   } catch (error) {
+//     console.error("Error fetching counselors:", error);
+//     res.status(500).json({ message: "Failed to fetch nearby counselors" });
+//   }
+// });
 app.get("/api/nearby-counselors", async (req, res) => {
-  const location = "18.5204303,73.8567437"; // Example coordinates
-  const radius = 5000;
-  const apiKey = "AIzaSyDU3YX1HSgywtTHHZ44I82rPFZTEOaV0gQ"; // Replace with your actual key
+  const { lat, lng } = req.query;
+  const apiKey = "AIzaSyDU3YX1HSgywtTHHZ44I82rPFZTEOaV0gQ";
+
+  if (!lat || !lng) {
+    return res
+      .status(400)
+      .json({ message: "Latitude and Longitude are required." });
+  }
 
   try {
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=psychiatrists+near+${location}&key=${apiKey}`
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=psychiatrists+near+${lat},${lng}&key=${apiKey}`
     );
 
     res.json(response.data.results);

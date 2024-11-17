@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import html2pdf from "html2pdf.js";
+import "./Report.css";
 
 const GenerateReport = ({ token }) => {
   const [userDetails, setUserDetails] = useState(null);
@@ -12,16 +13,60 @@ const GenerateReport = ({ token }) => {
 
   const fetchNearbyCounselors = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/nearby-counselors"
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+
+      const { latitude, longitude } = position.coords;
+
+      const response = await fetch(
+        `http://localhost:5000/api/nearby-counselors?lat=${latitude}&lng=${longitude}`
       );
-      const sortedCounselors = (response.data || []).sort(
-        (a, b) => b.rating - a.rating
-      ); // Sort counselors by rating
-      setNearbyCounselors(sortedCounselors.slice(0, 5)); // Top 5 counselors
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const counselorsWithDistance = (data || []).map((counselor) => {
+        const { lat, lng } = counselor.geometry.location;
+        const distance = calculateDistance(latitude, longitude, lat, lng);
+        return { ...counselor, distance };
+      });
+
+      const sortedCounselors = counselorsWithDistance.sort((a, b) => {
+        if (b.rating === a.rating) {
+          return a.distance - b.distance;
+        }
+        return b.rating - a.rating;
+      });
+      // const sortedCounselors = (data || []).sort((a, b) => b.rating - a.rating);
+      setNearbyCounselors(sortedCounselors.slice(0, 5));
     } catch (error) {
       console.error("Error fetching nearby counselors:", error);
+
+      if (error.code === 1) {
+        alert("Please enable location services to fetch nearby counselors.");
+      } else {
+        alert("An error occurred while fetching nearby counselors.");
+      }
     }
+  };
+  const calculateDistance = (lat1, lng1, lat2, lng2) => {
+    const toRadians = (degrees) => (degrees * Math.PI) / 180;
+    const R = 6371;
+    const dLat = toRadians(lat2 - lat1);
+    const dLng = toRadians(lng2 - lng1);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRadians(lat1)) *
+        Math.cos(toRadians(lat2)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
   };
 
   useEffect(() => {
@@ -69,7 +114,7 @@ const GenerateReport = ({ token }) => {
       const score = wq * quizNumericScore + wd * depressionIndex;
       const status = score >= 0.5 ? "Depressed" : "Not Depressed";
 
-      setCombinedResult([score.toFixed(2), status]); // Round score to 2 decimals
+      setCombinedResult([score.toFixed(2), status]);
     }
   }, [quizScore, depressionIndex]);
 
@@ -133,10 +178,10 @@ const GenerateReport = ({ token }) => {
           </div>
           <div className="card-body">
             <p>
-              <strong>Quiz Result:</strong> {quizScore}
+              <strong>PHQ-8 Quiz Result:</strong> {quizScore}
             </p>
             <p>
-              <strong>Depression Index:</strong> {depressionIndex}
+              <strong>Facial Depression Index:</strong> {depressionIndex}
             </p>
             <p>
               <strong>Combined Result Score:</strong> {combinedResult[0]}
@@ -168,28 +213,52 @@ const GenerateReport = ({ token }) => {
               <h5>Nearby Counselors</h5>
             </div>
             <div className="card-body">
-              <ul>
+              <div className="row">
                 {nearbyCounselors.map((counselor, index) => (
-                  <li key={index} className="mb-2">
-                    <strong>{counselor.name}</strong> - {counselor.vicinity}
-                    <p>{counselor.formatted_address}</p>
-                    {counselor.contactNumber && (
-                      <span> (Contact: {counselor.contactNumber})</span>
-                    )}
-                    {counselor.rating && (
-                      <span> - Rating: {counselor.rating}/5</span>
-                    )}
-                    {counselor.user_ratings_total && (
-                      <span> - Rated By: {counselor.user_ratings_total}</span>
-                    )}
-                  </li>
+                  <div className="col-md-6 mb-3" key={index}>
+                    <div className="card shadow-sm">
+                      <div className="card-body">
+                        <h5 className="card-title text-primary">
+                          {counselor.name}
+                        </h5>
+                        <p className="card-text">
+                          <small>
+                            <strong>Address:</strong>{" "}
+                            {counselor.formatted_address}
+                          </small>
+                        </p>
+                        <div className="d-flex flex-wrap gap-2">
+                          {counselor.rating && (
+                            <span className="badge bg-success">
+                              Rating: {counselor.rating}/5
+                            </span>
+                          )}
+                          {counselor.distance && (
+                            <span className="badge bg-secondary">
+                              Distance: {counselor.distance.toFixed(2)} km
+                            </span>
+                          )}
+                          {counselor.user_ratings_total && (
+                            <span className="badge bg-info">
+                              Rated By: {counselor.user_ratings_total} users
+                            </span>
+                          )}
+                          {counselor.contactNumber && (
+                            <span className="badge bg-warning text-dark">
+                              Contact: {counselor.contactNumber}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         )}
 
-        <div className="text-center">
+        <div className="text-center mb-2">
           <button className="btn btn-primary" onClick={downloadPDF}>
             Download PDF
           </button>
