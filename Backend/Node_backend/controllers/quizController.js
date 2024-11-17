@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const { User, Report } = require("../models/User");
 
 // Controller to save quiz
 exports.saveQuiz = async (req, res) => {

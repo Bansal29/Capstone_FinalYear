@@ -1,5 +1,5 @@
 // UserController.js
-const User = require("../models/User.js"); // Adjust the import based on your User model's location
+const { User, Report } = require("../models/User"); // Adjust the import based on your User model's location
 const { cloudinary } = require("../config/CloudinaryConfig.js"); // Adjust the import based on your cloudinaryConfig's location
 
 // Update user profile

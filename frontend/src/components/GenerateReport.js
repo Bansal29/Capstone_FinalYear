@@ -11,6 +11,33 @@ const GenerateReport = ({ token }) => {
   const [nearbyCounselors, setNearbyCounselors] = useState([]);
   const reportRef = useRef();
 
+  const saveReportToDB = async () => {
+    try {
+      const reportData = {
+        userId: userDetails._id, // Ensure this is populated with the logged-in user ID
+        quizScore,
+        depressionIndex,
+        combinedResult,
+        timestamp: new Date().toISOString(),
+      };
+
+      const response = await axios.post(
+        "http://localhost:5000/api/reports/save",
+        reportData
+      );
+
+      if (response.status === 201) {
+        alert("Report saved successfully!");
+      } else {
+        console.error("Failed to save report:", response.data.message);
+        alert("Failed to save report. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Error saving report:", error);
+      alert("An error occurred while saving the report.");
+    }
+  };
+
   const fetchNearbyCounselors = async () => {
     try {
       const position = await new Promise((resolve, reject) => {
@@ -260,7 +287,10 @@ const GenerateReport = ({ token }) => {
 
         <div className="text-center mb-2">
           <button className="btn btn-primary" onClick={downloadPDF}>
-            Download PDF
+            Download Report (PDF)
+          </button>
+          <button className="btn btn-success ms-2" onClick={saveReportToDB}>
+            Save Report to Database
           </button>
         </div>
       </div>

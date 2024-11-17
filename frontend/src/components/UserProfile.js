@@ -66,6 +66,23 @@ const SaveButton = styled.button`
   width: 100%;
 `;
 
+const ReportSection = styled.section`
+  margin-top: 30px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const ReportTitle = styled.h5`
+  font-weight: bold;
+`;
+
+const ReportContent = styled.div`
+  margin-top: 15px;
+  white-space: pre-wrap;
+`;
+
 const UserProfile = () => {
   const profilePicRef = useRef(null);
   const inputFileRef = useRef(null);
@@ -79,6 +96,7 @@ const UserProfile = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [reportData, setReportData] = useState(null);
 
   // Fetch user data when the component mounts
   useEffect(() => {
@@ -104,6 +122,24 @@ const UserProfile = () => {
         setEmail(data.email);
         setAge(data.age);
         // Set password if it’s okay to autofill (not recommended for security reasons)
+
+        // Fetch report data
+        const reportResponse = await fetch(
+          "http://localhost:5000/api/reports/getreport",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (!reportResponse.ok) throw new Error("Failed to fetch report");
+
+        const report = await reportResponse.json();
+        console.log(report);
+        setReportData(report);
       } catch (error) {
         console.error("Error fetching user data:", error);
         setError(error.message);
@@ -274,6 +310,40 @@ const UserProfile = () => {
                   </div>
                 </form>
               </ProfileSettingsContainer>
+              {reportData && (
+                <ReportSection>
+                  <ReportTitle>Latest User Report</ReportTitle>
+                  <ReportContent>
+                    <ul>
+                      <li>
+                        <strong>Quiz Score:</strong>{" "}
+                        {reportData.report.quizScore || "N/A"}
+                      </li>
+                      <li>
+                        <strong>Depression Index:</strong>{" "}
+                        {reportData.report.depressionIndex || "N/A"}
+                      </li>
+                      <li>
+                        <strong>Timestamp:</strong>{" "}
+                        {new Date(
+                          reportData.report.timestamp
+                        ).toLocaleString() || "N/A"}
+                      </li>
+                    </ul>
+                    <h6>Combined Results:</h6>
+                    <ul>
+                      {reportData.report.combinedResult &&
+                      reportData.report.combinedResult.length > 0 ? (
+                        reportData.report.combinedResult.map(
+                          (result, index) => <li key={index}>{result}</li>
+                        )
+                      ) : (
+                        <li>No combined results available.</li>
+                      )}
+                    </ul>
+                  </ReportContent>
+                </ReportSection>
+              )}
             </div>
           </div>
         </div>

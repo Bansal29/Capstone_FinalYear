@@ -63,5 +63,29 @@ const UserSchema = new mongoose.Schema({
   quizzes: [QuizSchema],
   facialResults: [FacialResultSchema],
 });
+const reportSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  quizScore: {
+    type: String,
+    required: true,
+  },
+  depressionIndex: {
+    type: Number,
+    required: true,
+  },
+  combinedResult: {
+    type: Array, // [score, status]
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
 const User = mongoose.model("User", UserSchema);
-module.exports = User;
+const Report = mongoose.model("Report", reportSchema);
+module.exports = { User, Report };

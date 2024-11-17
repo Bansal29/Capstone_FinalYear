@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const { User, Report } = require("../models/User");
 
 exports.saveFacial = async (req, res) => {
   try {

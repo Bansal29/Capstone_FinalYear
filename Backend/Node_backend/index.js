@@ -4,6 +4,7 @@ const authRoutes = require("./routes/authRoutes");
 const quizRoutes = require("./routes/quizRoutes");
 const userRoutes = require("./routes/userRoutes");
 const faceRoutes = require("./routes/faceRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 const cors = require("cors");
 const axios = require("axios");
 require("dotenv").config();
@@ -22,22 +23,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/facial", faceRoutes);
-// app.get("/api/nearby-counselors", async (req, res) => {
-//   const location = "18.5204303,73.8567437"; // Example coordinates
-//   const radius = 5000;
-//   const apiKey = "AIzaSyDU3YX1HSgywtTHHZ44I82rPFZTEOaV0gQ"; // Replace with your actual key
-
-//   try {
-//     const response = await axios.get(
-//       `https://maps.googleapis.com/maps/api/place/textsearch/json?query=psychiatrists+near+${location}&key=${apiKey}`
-//     );
-
-//     res.json(response.data.results);
-//   } catch (error) {
-//     console.error("Error fetching counselors:", error);
-//     res.status(500).json({ message: "Failed to fetch nearby counselors" });
-//   }
-// });
+app.use("/api/reports", reportRoutes);
 app.get("/api/nearby-counselors", async (req, res) => {
   const { lat, lng } = req.query;
   const apiKey = "AIzaSyDU3YX1HSgywtTHHZ44I82rPFZTEOaV0gQ";
