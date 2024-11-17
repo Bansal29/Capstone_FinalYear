@@ -10,18 +10,13 @@ function Login({ setToken }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
-    const response = await fetch(
-      "https://maansick-backend.vercel.app/api/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
-      }
-    );
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
     const data = await response.json();
     if (response.ok) {
@@ -45,6 +40,7 @@ function Login({ setToken }) {
                 <input
                   type="email"
                   className="form-control"
+                  autocomplete="off"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -55,6 +51,7 @@ function Login({ setToken }) {
                 <input
                   type="password"
                   className="form-control"
+                  autocomplete="off"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required

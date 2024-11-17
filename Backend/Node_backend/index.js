@@ -16,14 +16,7 @@ connectDB();
 
 // Middleware
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://maansick.vercel.app", // Allow requests from your frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
-    credentials: true, // Include credentials (e.g., cookies, authorization headers)
-  })
-);
-app.options("*", cors());
+app.use(cors());
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -45,7 +38,6 @@ app.get("/api/nearby-counselors", async (req, res) => {
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/place/textsearch/json?query=psychiatrists+near+${lat},${lng}&key=${apiKey}`
     );
-
     res.json(response.data.results);
   } catch (error) {
     console.error("Error fetching counselors:", error);

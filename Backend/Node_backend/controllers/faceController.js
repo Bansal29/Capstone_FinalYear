@@ -13,7 +13,7 @@ exports.saveFacial = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    console.log("emotions at backend:", emotions);
     const newFacialResult = {
       emotions,
       averageDepressionScore,

@@ -18,17 +18,17 @@ const QuizSchema = new mongoose.Schema({
     required: true,
   },
 });
-const FacialResultSchema = new mongoose.Schema({
-  timestamp: {
-    type: Date,
-    default: Date.now,
+const FacialResultSchema = new mongoose.Schema(
+  {
+    emotions: [String],
+    averageDepressionScore: {
+      type: Number,
+      required: true,
+    },
   },
-  emotions: [String],
-  averageDepressionScore: {
-    type: Number, // Average depression score calculated from facial analysis
-    required: true,
-  },
-});
+  { timestamps: true } // Automatically adds createdAt and updatedAt
+);
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
