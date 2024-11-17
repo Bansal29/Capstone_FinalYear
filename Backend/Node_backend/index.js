@@ -16,7 +16,13 @@ connectDB();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://maansick.vercel.app", // Allow requests from your frontend
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods
+    credentials: true, // Include credentials (e.g., cookies, authorization headers)
+  })
+);
 
 // Routes
 app.use("/api/auth", authRoutes);
